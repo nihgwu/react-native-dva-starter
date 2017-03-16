@@ -1,0 +1,3 @@
+rootProject.name = 'DvaStarter'
+
+include ':app'
