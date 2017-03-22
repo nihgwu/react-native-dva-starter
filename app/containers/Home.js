@@ -1,13 +1,8 @@
 import React, { Component } from 'react'
-import {
-  StyleSheet,
-  View,
-  Image,
-  Button,
-} from 'react-native'
+import { StyleSheet, View, Image, Button } from 'react-native'
 import { connect } from 'dva'
 
-import { createAction, NavigationActions } from '../utils'
+import { NavigationActions } from '../utils'
 
 @connect()
 class Home extends Component {
@@ -16,7 +11,10 @@ class Home extends Component {
     tabBar: {
       label: 'Home',
       icon: ({ focused, tintColor }) => (
-        <Image style={[styles.icon, {tintColor: focused? tintColor : 'gray'}]} source={require('../images/house.png')} />
+        <Image
+          style={[styles.icon, { tintColor: focused ? tintColor : 'gray' }]}
+          source={require('../images/house.png')}
+        />
       ),
     },
   }
@@ -24,11 +22,12 @@ class Home extends Component {
   onPress = () => {
     this.props.dispatch(NavigationActions.navigate({ routeName: 'Detail' }))
   }
+
   render() {
     return (
       <View style={styles.container}>
-      	<Button title='Goto Detail' onPress={this.onPress} />
-    	</View>
+        <Button title="Goto Detail" onPress={this.onPress} />
+      </View>
     )
   }
 }

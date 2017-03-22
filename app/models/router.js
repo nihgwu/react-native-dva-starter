@@ -13,26 +13,28 @@ const actions = [
 export default {
   namespace: 'router',
   state: {
-    ...routerReducer()
+    ...routerReducer(),
   },
   reducers: {
     apply(state, { payload: action }) {
       return routerReducer(state, action)
-    }
+    },
   },
   effects: {
-    watch: [function*({ take, call, put, select }) {
-      while (true) {
-        const payload = yield take(actions)
-        yield put({
-          type: 'apply',
-          payload,
-        })
-        yield call(delay, 500) // debounce, see https://github.com/react-community/react-navigation/issues/271
-      }
-    }, { type: 'watcher' }],
+    watch: [
+      function* watch({ take, call, put }) {
+        const loop = true
+        while (loop) {
+          const payload = yield take(actions)
+          yield put({
+            type: 'apply',
+            payload,
+          })
+          // debounce, see https://github.com/react-community/react-navigation/issues/271
+          yield call(delay, 500)
+        }
+      },
+      { type: 'watcher' },
+    ],
   },
-  subscriptions: {
-    setup({ dispatch }) {}
-  }
 }

@@ -14,36 +14,45 @@ import Home from './containers/Home'
 import Account from './containers/Account'
 import Detail from './containers/Detail'
 
-const HomeNavigator = TabNavigator({
-  Home: { screen: Home },
-  Account: { screen: Account },
-}, {
-  tabBarComponent: TabView.TabBarBottom,
-  tabBarPosition: 'bottom',
-  swipeEnabled: false,
-  animationEnabled: false,
-  lazyLoad: true,
-})
+const HomeNavigator = TabNavigator(
+  {
+    Home: { screen: Home },
+    Account: { screen: Account },
+  },
+  {
+    tabBarComponent: TabView.TabBarBottom,
+    tabBarPosition: 'bottom',
+    swipeEnabled: false,
+    animationEnabled: false,
+    lazyLoad: true,
+  },
+)
 
-const MainNavigator = StackNavigator({
-  HomeNavigator: { screen: HomeNavigator },
-  Detail: { screen: Detail },
-}, {
-  headerMode: 'float',
-})
+const MainNavigator = StackNavigator(
+  {
+    HomeNavigator: { screen: HomeNavigator },
+    Detail: { screen: Detail },
+  },
+  {
+    headerMode: 'float',
+  },
+)
 
-const AppNavigator = StackNavigator({
-  Main: { screen: MainNavigator },
-  Login: { screen: Login },
-}, {
-  headerMode: 'none',
-  mode: 'modal',
-  navigationOptions: {
-    cardStack: {
-      gesturesEnabled: false,
+const AppNavigator = StackNavigator(
+  {
+    Main: { screen: MainNavigator },
+    Login: { screen: Login },
+  },
+  {
+    headerMode: 'none',
+    mode: 'modal',
+    navigationOptions: {
+      cardStack: {
+        gesturesEnabled: false,
+      },
     },
   },
-})
+)
 
 function getCurrentScreen(navigationState) {
   if (!navigationState) {
@@ -58,6 +67,14 @@ function getCurrentScreen(navigationState) {
 
 @connect(({ router }) => ({ router }))
 class Router extends PureComponent {
+  componentWillMount() {
+    BackAndroid.addEventListener('hardwareBackPress', this.backHandle)
+  }
+
+  componentWillUnmount() {
+    BackAndroid.removeEventListener('hardwareBackPress', this.backHandle)
+  }
+
   backHandle = () => {
     const currentScreen = getCurrentScreen(this.props.router)
     if (currentScreen === 'Login') {
@@ -70,18 +87,10 @@ class Router extends PureComponent {
     return false
   }
 
-  componentWillMount() {
-    BackAndroid.addEventListener('hardwareBackPress', this.backHandle)
-  }
-  componentWillUnmount() {
-    BackAndroid.removeEventListener('hardwareBackPress', this.backHandle)
-  }
   render() {
     const { dispatch, router } = this.props
     const navigation = addNavigationHelpers({ dispatch, state: router })
-    return (
-      <AppNavigator navigation={navigation} />
-    )
+    return <AppNavigator navigation={navigation} />
   }
 }
 

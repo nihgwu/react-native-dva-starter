@@ -1,12 +1,8 @@
 import React, { Component } from 'react'
-import {
-  StyleSheet,
-  View,
-  Button,
-} from 'react-native'
+import { StyleSheet, View, Button } from 'react-native'
 import { connect } from 'dva'
 
-import { createAction, NavigationActions } from '../utils'
+import { NavigationActions } from '../utils'
 
 @connect()
 class Detail extends Component {
@@ -17,10 +13,11 @@ class Detail extends Component {
   onPress = () => {
     this.props.dispatch(NavigationActions.back())
   }
+
   render() {
     return (
       <View style={styles.container}>
-        <Button title='Back' onPress={this.onPress} />
+        <Button title="Back" onPress={this.onPress} />
       </View>
     )
   }

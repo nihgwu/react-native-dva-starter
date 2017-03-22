@@ -9,31 +9,34 @@ export default {
   },
   reducers: {
     loginStart(state, { payload }) {
-      return {...state, ...payload }
+      return { ...state, ...payload }
     },
     loginEnd(state, { payload }) {
-      return {...state, ...payload }
+      return { ...state, ...payload }
     },
   },
-  effects: { 
+  effects: {
     * login({ payload }, { call, put }) {
-      yield put(createAction('loginStart')({
-        fetching: true
-      }))
+      yield put(
+        createAction('loginStart')({
+          fetching: true,
+        }),
+      )
       const login = yield call(authService.login, payload)
       if (login) {
-        yield put(NavigationActions.reset({
-          index: 0,
-          actions: [NavigationActions.navigate({ routeName: 'Main' })],
-        }))
+        yield put(
+          NavigationActions.reset({
+            index: 0,
+            actions: [NavigationActions.navigate({ routeName: 'Main' })],
+          }),
+        )
       }
-      yield put(createAction('loginEnd')({
-        login,
-        fetching: false,
-      }))
-    }
+      yield put(
+        createAction('loginEnd')({
+          login,
+          fetching: false,
+        }),
+      )
+    },
   },
-  subscriptions: {
-    setup({ dispatch }) {}
-  }
 }

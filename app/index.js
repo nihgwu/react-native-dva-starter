@@ -6,9 +6,7 @@ import { registerModels } from './models'
 import Router from './router'
 
 const app = dva({
-  initialState: {
-
-  },
+  initialState: {},
   onError(e) {
     console.log('onError', e)
   },
