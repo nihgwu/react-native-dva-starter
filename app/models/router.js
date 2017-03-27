@@ -31,7 +31,7 @@ export default {
             payload,
           })
           // debounce, see https://github.com/react-community/react-navigation/issues/271
-          yield call(delay, 500)
+          yield call(delay, 250)
         }
       },
       { type: 'watcher' },
