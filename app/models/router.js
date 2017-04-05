@@ -31,7 +31,9 @@ export default {
             payload,
           })
           // debounce, see https://github.com/react-community/react-navigation/issues/271
-          yield call(delay, 250)
+          if (payload.type === 'Navigation/NAVIGATE') {
+            yield call(delay, 250)
+          }
         }
       },
       { type: 'watcher' },
