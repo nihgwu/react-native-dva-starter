@@ -7,9 +7,7 @@ import { createAction, NavigationActions } from '../utils'
 @connect(({ app }) => ({ ...app }))
 class Login extends Component {
   static navigationOptions = {
-    tabBar: {
-      label: 'Login',
-    },
+    title: 'Login',
   }
 
   onLogin = () => {

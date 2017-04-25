@@ -3,7 +3,7 @@ import { BackAndroid } from 'react-native'
 import {
   StackNavigator,
   TabNavigator,
-  TabView,
+  TabBarBottom,
   addNavigationHelpers,
   NavigationActions,
 } from 'react-navigation'
@@ -20,7 +20,7 @@ const HomeNavigator = TabNavigator(
     Account: { screen: Account },
   },
   {
-    tabBarComponent: TabView.TabBarBottom,
+    tabBarComponent: TabBarBottom,
     tabBarPosition: 'bottom',
     swipeEnabled: false,
     animationEnabled: false,
@@ -47,9 +47,7 @@ const AppNavigator = StackNavigator(
     headerMode: 'none',
     mode: 'modal',
     navigationOptions: {
-      cardStack: {
-        gesturesEnabled: false,
-      },
+      gesturesEnabled: false,
     },
   },
 )

@@ -10,14 +10,19 @@ class Detail extends Component {
     title: 'Detail',
   }
 
-  onPress = () => {
-    this.props.dispatch(NavigationActions.back())
+  gotoDetail = () => {
+    this.props.dispatch(NavigationActions.navigate({ routeName: 'Detail' }))
+  }
+
+  goBack = () => {
+    this.props.dispatch(NavigationActions.back({ routeName: 'Account' }))
   }
 
   render() {
     return (
       <View style={styles.container}>
-        <Button title="Back" onPress={this.onPress} />
+        <Button title="Goto Detail" onPress={this.gotoDetail} />
+        <Button title="Go Back" onPress={this.goBack} />
       </View>
     )
   }

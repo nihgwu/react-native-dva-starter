@@ -8,25 +8,23 @@ import { NavigationActions } from '../utils'
 class Home extends Component {
   static navigationOptions = {
     title: 'Home',
-    tabBar: {
-      label: 'Home',
-      icon: ({ focused, tintColor }) => (
-        <Image
-          style={[styles.icon, { tintColor: focused ? tintColor : 'gray' }]}
-          source={require('../images/house.png')}
-        />
-      ),
-    },
+    tabBarLabel: 'Home',
+    tabBarIcon: ({ focused, tintColor }) => (
+      <Image
+        style={[styles.icon, { tintColor: focused ? tintColor : 'gray' }]}
+        source={require('../images/house.png')}
+      />
+    ),
   }
 
-  onPress = () => {
+  gotoDetail = () => {
     this.props.dispatch(NavigationActions.navigate({ routeName: 'Detail' }))
   }
 
   render() {
     return (
       <View style={styles.container}>
-        <Button title="Goto Detail" onPress={this.onPress} />
+        <Button title="Goto Detail" onPress={this.gotoDetail} />
       </View>
     )
   }

@@ -8,25 +8,23 @@ import { NavigationActions } from '../utils'
 class Account extends Component {
   static navigationOptions = {
     title: 'Account',
-    tabBar: {
-      label: 'Account',
-      icon: ({ focused, tintColor }) => (
-        <Image
-          style={[styles.icon, { tintColor: focused ? tintColor : 'gray' }]}
-          source={require('../images/person.png')}
-        />
-      ),
-    },
+    tabBarLabel: 'Account',
+    tabBarIcon: ({ focused, tintColor }) => (
+      <Image
+        style={[styles.icon, { tintColor: focused ? tintColor : 'gray' }]}
+        source={require('../images/person.png')}
+      />
+    ),
   }
 
-  onPress = () => {
+  gotoLogin = () => {
     this.props.dispatch(NavigationActions.navigate({ routeName: 'Login' }))
   }
 
   render() {
     return (
       <View style={styles.container}>
-        <Button title="Goto Login" onPress={this.onPress} />
+        <Button title="Goto Login" onPress={this.gotoLogin} />
       </View>
     )
   }
