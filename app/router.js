@@ -25,7 +25,7 @@ const HomeNavigator = TabNavigator(
     swipeEnabled: false,
     animationEnabled: false,
     lazyLoad: true,
-  },
+  }
 )
 
 const MainNavigator = StackNavigator(
@@ -35,7 +35,7 @@ const MainNavigator = StackNavigator(
   },
   {
     headerMode: 'float',
-  },
+  }
 )
 
 const AppNavigator = StackNavigator(
@@ -49,7 +49,7 @@ const AppNavigator = StackNavigator(
     navigationOptions: {
       gesturesEnabled: false,
     },
-  },
+  }
 )
 
 function getCurrentScreen(navigationState) {

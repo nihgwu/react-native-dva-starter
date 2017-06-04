@@ -24,7 +24,7 @@ export default {
           NavigationActions.reset({
             index: 0,
             actions: [NavigationActions.navigate({ routeName: 'Main' })],
-          }),
+          })
         )
       }
       yield put(createAction('loginEnd')({ login }))
