@@ -32,7 +32,7 @@ export default {
           })
           // debounce, see https://github.com/react-community/react-navigation/issues/271
           if (payload.type === 'Navigation/NAVIGATE') {
-            yield call(delay, 250)
+            yield call(delay, 500)
           }
         }
       },
