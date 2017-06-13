@@ -18,6 +18,7 @@ app.router(() => <Router />)
 const App = app.start()
 
 // eslint-disable-next-line no-underscore-dangle
-persistStore(app._store, { storage: AsyncStorage })
+// fix AsyncStorage save router and back error
+persistStore(app._store, { blacklist: ['router'], storage: AsyncStorage })
 
 AppRegistry.registerComponent('DvaStarter', () => App)
