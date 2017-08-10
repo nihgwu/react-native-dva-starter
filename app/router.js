@@ -7,7 +7,7 @@ import {
   addNavigationHelpers,
   NavigationActions,
 } from 'react-navigation'
-import { connect } from 'dva'
+import { connect } from 'react-redux'
 
 import Login from './containers/Login'
 import Home from './containers/Home'

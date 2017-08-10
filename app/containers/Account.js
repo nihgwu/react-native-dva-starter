@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { StyleSheet, View, Image, Button } from 'react-native'
-import { connect } from 'dva'
+import { connect } from 'react-redux'
 
 import { NavigationActions } from '../utils'
 

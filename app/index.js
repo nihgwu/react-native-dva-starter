@@ -1,23 +1,23 @@
 import React from 'react'
 import { AppRegistry, AsyncStorage } from 'react-native'
-import dva from 'dva/mobile'
 import { persistStore, autoRehydrate } from 'redux-persist'
 
-import { registerModels } from './models'
+import dva from './utils/dva'
 import Router from './router'
+
+import appModel from './models/app'
+import routerModel from './models//router'
 
 const app = dva({
   initialState: {},
+  models: [appModel, routerModel],
   extraEnhancers: [autoRehydrate()],
   onError(e) {
     console.log('onError', e)
   },
 })
-registerModels(app)
-app.router(() => <Router />)
-const App = app.start()
 
-// eslint-disable-next-line no-underscore-dangle
-persistStore(app._store, { storage: AsyncStorage })
+const App = app.start(<Router />)
+persistStore(app.getStore(), { storage: AsyncStorage })
 
 AppRegistry.registerComponent('DvaStarter', () => App)
