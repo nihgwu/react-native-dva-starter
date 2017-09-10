@@ -18,6 +18,9 @@ const app = dva({
 })
 
 const App = app.start(<Router />)
-persistStore(app.getStore(), { storage: AsyncStorage })
+persistStore(app.getStore(), {
+  storage: AsyncStorage,
+  blacklist: ['router'],
+})
 
 AppRegistry.registerComponent('DvaStarter', () => App)
