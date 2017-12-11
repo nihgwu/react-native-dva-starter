@@ -9,11 +9,12 @@ class Home extends Component {
   static navigationOptions = {
     title: 'Home',
     tabBarLabel: 'Home',
-    tabBarIcon: ({ focused, tintColor }) =>
+    tabBarIcon: ({ focused, tintColor }) => (
       <Image
         style={[styles.icon, { tintColor: focused ? tintColor : 'gray' }]}
         source={require('../images/house.png')}
-      />,
+      />
+    ),
   }
 
   gotoDetail = () => {

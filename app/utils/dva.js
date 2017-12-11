@@ -12,10 +12,7 @@ export default function(options) {
   // eslint-disable-next-line no-underscore-dangle
   const store = app._store
 
-  app.start = container => () =>
-    <Provider store={store}>
-      {container}
-    </Provider>
+  app.start = container => () => <Provider store={store}>{container}</Provider>
 
   app.getStore = () => store
 
