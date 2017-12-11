@@ -1,23 +1,16 @@
-import { createAction, NavigationActions } from '../utils'
+import { NavigationActions } from 'react-navigation'
 import * as authService from '../services/auth'
 
 export default {
   namespace: 'app',
   state: {
-    fetching: false,
     login: false,
+    fetching: false,
   },
-  reducers: {
-    loginStart(state, { payload }) {
-      return { ...state, ...payload, fetching: true }
-    },
-    loginEnd(state, { payload }) {
-      return { ...state, ...payload, fetching: false }
-    },
-  },
+
   effects: {
     *login({ payload }, { call, put }) {
-      yield put(createAction('loginStart')())
+      yield put({ type: 'loginStart', payload })
       const login = yield call(authService.login, payload)
       if (login) {
         yield put(
@@ -27,7 +20,23 @@ export default {
           })
         )
       }
-      yield put(createAction('loginEnd')({ login }))
+      yield put({ type: 'loginEnd', login })
+    },
+    *logout({ cb }, { put }) {
+      yield put({ type: 'logoutStart' })
+      if (cb) cb()
+    },
+  },
+
+  reducers: {
+    loginStart(state, { payload }) {
+      return { ...state, ...payload, fetching: true }
+    },
+    loginEnd(state, { login }) {
+      return { ...state, login, fetching: false }
+    },
+    logoutStart(state, { payload }) {
+      return { ...state, ...payload, login: false }
     },
   },
 }

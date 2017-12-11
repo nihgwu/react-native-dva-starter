@@ -1,8 +1,7 @@
 import React, { Component } from 'react'
 import { StyleSheet, View, Button, ActivityIndicator } from 'react-native'
 import { connect } from 'react-redux'
-
-import { createAction, NavigationActions } from '../utils'
+import { NavigationActions } from 'react-navigation'
 
 @connect(({ app }) => ({ ...app }))
 class Login extends Component {
@@ -11,7 +10,7 @@ class Login extends Component {
   }
 
   onLogin = () => {
-    this.props.dispatch(createAction('app/login')())
+    this.props.dispatch({ type: 'app/login' })
   }
 
   onClose = () => {
@@ -20,6 +19,7 @@ class Login extends Component {
 
   render() {
     const { fetching } = this.props
+    console.log(this.props)
     return (
       <View style={styles.container}>
         {fetching ? (
