@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
-import { StyleSheet, View, Button } from 'react-native'
+import { StyleSheet, View } from 'react-native'
 import { connect } from 'react-redux'
+
+import { Button } from '../components'
 
 import { NavigationActions } from '../utils'
 
@@ -21,8 +23,8 @@ class Detail extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <Button title="Goto Detail" onPress={this.gotoDetail} />
-        <Button title="Go Back" onPress={this.goBack} />
+        <Button text="Goto Detail" onPress={this.gotoDetail} />
+        <Button text="Go Back" onPress={this.goBack} />
       </View>
     )
   }

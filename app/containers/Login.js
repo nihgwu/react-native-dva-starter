@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
-import { StyleSheet, View, Button, ActivityIndicator } from 'react-native'
+import { StyleSheet, View, Text, ActivityIndicator } from 'react-native'
 import { connect } from 'react-redux'
+
+import { Button, Touchable } from '../components'
 
 import { createAction, NavigationActions } from '../utils'
 
@@ -25,9 +27,13 @@ class Login extends Component {
         {fetching ? (
           <ActivityIndicator />
         ) : (
-          <Button title="Login" onPress={this.onLogin} />
+          <Button text="Login" onPress={this.onLogin} />
         )}
-        {!fetching && <Button title="Close" onPress={this.onClose} />}
+        {!fetching && (
+          <Touchable style={styles.close} text="Close" onPress={this.onClose}>
+            <Text>Close</Text>
+          </Touchable>
+        )}
       </View>
     )
   }
@@ -38,6 +44,11 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
+  },
+  close: {
+    position: 'absolute',
+    right: 20,
+    top: 40,
   },
 })
 

@@ -9,6 +9,7 @@ import {
 } from 'react-navigation'
 import { connect } from 'react-redux'
 
+import Loading from './containers/Loading'
 import Login from './containers/Login'
 import Home from './containers/Home'
 import Account from './containers/Account'
@@ -87,7 +88,7 @@ function getCurrentScreen(navigationState) {
   return route.routeName
 }
 
-@connect(({ router }) => ({ router }))
+@connect(({ app, router }) => ({ app, router }))
 class Router extends PureComponent {
   componentWillMount() {
     BackHandler.addEventListener('hardwareBackPress', this.backHandle)
@@ -110,7 +111,9 @@ class Router extends PureComponent {
   }
 
   render() {
-    const { dispatch, router } = this.props
+    const { dispatch, app, router } = this.props
+    if (app.loading) return <Loading />
+
     const navigation = addNavigationHelpers({ dispatch, state: router })
     return <AppNavigator navigation={navigation} />
   }

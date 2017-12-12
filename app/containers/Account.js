@@ -1,10 +1,12 @@
 import React, { Component } from 'react'
-import { StyleSheet, View, Image, Button } from 'react-native'
+import { StyleSheet, View, Image } from 'react-native'
 import { connect } from 'react-redux'
 
-import { NavigationActions } from '../utils'
+import { Button } from '../components'
 
-@connect()
+import { createAction, NavigationActions } from '../utils'
+
+@connect(({ app }) => ({ ...app }))
 class Account extends Component {
   static navigationOptions = {
     title: 'Account',
@@ -21,10 +23,19 @@ class Account extends Component {
     this.props.dispatch(NavigationActions.navigate({ routeName: 'Login' }))
   }
 
+  logout = () => {
+    this.props.dispatch(createAction('app/logout')())
+  }
+
   render() {
+    const { login } = this.props
     return (
       <View style={styles.container}>
-        <Button title="Goto Login" onPress={this.gotoLogin} />
+        {login ? (
+          <Button text="Logout" onPress={this.logout} />
+        ) : (
+          <Button text="Goto Login" onPress={this.gotoLogin} />
+        )}
       </View>
     )
   }
