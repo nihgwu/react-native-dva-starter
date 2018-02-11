@@ -7,6 +7,10 @@ import {
   addNavigationHelpers,
   NavigationActions,
 } from 'react-navigation'
+import {
+  createReduxBoundAddListener,
+  createReactNavigationReduxMiddleware,
+} from 'react-navigation-redux-helpers'
 import { connect } from 'react-redux'
 
 import Loading from './containers/Loading'
@@ -88,6 +92,12 @@ function getCurrentScreen(navigationState) {
   return route.routeName
 }
 
+export const routerMiddleware = createReactNavigationReduxMiddleware(
+  'root',
+  state => state.router
+)
+const addListener = createReduxBoundAddListener('root')
+
 @connect(({ app, router }) => ({ app, router }))
 class Router extends PureComponent {
   componentWillMount() {
@@ -114,7 +124,11 @@ class Router extends PureComponent {
     const { dispatch, app, router } = this.props
     if (app.loading) return <Loading />
 
-    const navigation = addNavigationHelpers({ dispatch, state: router })
+    const navigation = addNavigationHelpers({
+      dispatch,
+      state: router,
+      addListener,
+    })
     return <AppNavigator navigation={navigation} />
   }
 }

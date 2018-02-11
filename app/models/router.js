@@ -23,8 +23,7 @@ export default {
   effects: {
     watch: [
       function* watch({ take, call, put }) {
-        const loop = true
-        while (loop) {
+        while (true) {
           const payload = yield take(actions)
           yield put({
             type: 'apply',
