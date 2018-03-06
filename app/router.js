@@ -8,6 +8,7 @@ import {
   NavigationActions,
 } from 'react-navigation'
 import {
+  initializeListeners,
   createReduxBoundAddListener,
   createReactNavigationReduxMiddleware,
 } from 'react-navigation-redux-helpers'
@@ -29,7 +30,7 @@ const HomeNavigator = TabNavigator(
     tabBarPosition: 'bottom',
     swipeEnabled: false,
     animationEnabled: false,
-    lazyLoad: true,
+    lazyLoad: false,
   }
 )
 
@@ -102,6 +103,10 @@ const addListener = createReduxBoundAddListener('root')
 class Router extends PureComponent {
   componentWillMount() {
     BackHandler.addEventListener('hardwareBackPress', this.backHandle)
+  }
+
+  componentDidMount() {
+    initializeListeners('root', this.props.router)
   }
 
   componentWillUnmount() {
