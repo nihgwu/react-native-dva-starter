@@ -5,12 +5,12 @@ import {
   TabNavigator,
   TabBarBottom,
   addNavigationHelpers,
-  NavigationActions,
+  NavigationActions
 } from 'react-navigation'
 import {
   initializeListeners,
   createReduxBoundAddListener,
-  createReactNavigationReduxMiddleware,
+  createReactNavigationReduxMiddleware
 } from 'react-navigation-redux-helpers'
 import { connect } from 'react-redux'
 
@@ -23,43 +23,43 @@ import Detail from './containers/Detail'
 const HomeNavigator = TabNavigator(
   {
     Home: { screen: Home },
-    Account: { screen: Account },
+    Account: { screen: Account }
   },
   {
     tabBarComponent: TabBarBottom,
     tabBarPosition: 'bottom',
     swipeEnabled: false,
     animationEnabled: false,
-    lazyLoad: false,
+    lazyLoad: false
   }
 )
 
 const MainNavigator = StackNavigator(
   {
     HomeNavigator: { screen: HomeNavigator },
-    Detail: { screen: Detail },
+    Detail: { screen: Detail }
   },
   {
-    headerMode: 'float',
+    headerMode: 'float'
   }
 )
 
 const AppNavigator = StackNavigator(
   {
     Main: { screen: MainNavigator },
-    Login: { screen: Login },
+    Login: { screen: Login }
   },
   {
     headerMode: 'none',
     mode: 'modal',
     navigationOptions: {
-      gesturesEnabled: false,
+      gesturesEnabled: false
     },
     transitionConfig: () => ({
       transitionSpec: {
         duration: 300,
         easing: Easing.out(Easing.poly(4)),
-        timing: Animated.timing,
+        timing: Animated.timing
       },
       screenInterpolator: sceneProps => {
         const { layout, position, scene } = sceneProps
@@ -68,17 +68,17 @@ const AppNavigator = StackNavigator(
         const height = layout.initHeight
         const translateY = position.interpolate({
           inputRange: [index - 1, index, index + 1],
-          outputRange: [height, 0, 0],
+          outputRange: [height, 0, 0]
         })
 
         const opacity = position.interpolate({
           inputRange: [index - 1, index - 0.99, index],
-          outputRange: [0, 1, 1],
+          outputRange: [0, 1, 1]
         })
 
         return { opacity, transform: [{ translateY }] }
-      },
-    }),
+      }
+    })
   }
 )
 
@@ -132,14 +132,31 @@ class Router extends PureComponent {
     const navigation = addNavigationHelpers({
       dispatch,
       state: router,
-      addListener,
+      addListener
     })
     return <AppNavigator navigation={navigation} />
   }
 }
 
+const getCurrentRouteName = state => {
+  const route = state.routes[state.index]
+  return typeof route.index === 'undefined'
+    ? route.routeName
+    : getCurrentRouteName(route)
+}
+
 export function routerReducer(state, action = {}) {
-  return AppNavigator.router.getStateForAction(action, state)
+  const nextState = AppNavigator.router.getStateForAction(action, state)
+
+  // prevents navigating twice to the same route
+  if (state && nextState) {
+    const stateRouteName = getCurrentRouteName(state)
+    const nextStateRouteName = getCurrentRouteName(nextState)
+    return stateRouteName === nextStateRouteName ? state : nextState
+  }
+
+  // Simply return the original `state` if `nextState` is null or undefined.
+  return nextState || state
 }
 
 export default Router
