@@ -7,7 +7,7 @@
     "test": "jest",
     "prettier": "prettier --write --single-quote --no-semi --trailing-comma es5 --print-width 80 \"app/**/*.js\"",
     "lint": "eslint app",
-    "format": "yarn prettier && yarn lint -- --fix",
+    "format": "yarn prettier && yarn lint --fix",
     "precommit": "yarn format"
   },
   "dependencies": {

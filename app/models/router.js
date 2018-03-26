@@ -1,14 +1,13 @@
 import { delay, NavigationActions } from '../utils'
 import { routerReducer } from '../router'
 
-const actions = [
-  NavigationActions.BACK,
-  NavigationActions.INIT,
-  NavigationActions.NAVIGATE,
-  NavigationActions.RESET,
-  NavigationActions.SET_PARAMS,
-  NavigationActions.URI,
-]
+const actions = Object.values(NavigationActions).filter(
+  x => typeof x === 'string' && x.startsWith('Navigation/')
+)
+
+const isPushAction = action =>
+  action.type === NavigationActions.NAVIGATE ||
+  action.type === NavigationActions.PUSH
 
 export default {
   namespace: 'router',
@@ -21,18 +20,28 @@ export default {
     },
   },
   effects: {
-    watch: [
-      function* watch({ take, call, put }) {
+    handlePush: [
+      function* handlePush({ take, call, put }) {
         while (true) {
-          const payload = yield take(actions)
+          const { payload } = yield take('handlePush')
           yield put({
             type: 'apply',
             payload,
           })
           // debounce, see https://github.com/react-community/react-navigation/issues/271
-          if (payload.type === 'Navigation/NAVIGATE') {
-            yield call(delay, 500)
-          }
+          yield call(delay, 500)
+        }
+      },
+      { type: 'watcher' },
+    ],
+    watch: [
+      function* watch({ take, put }) {
+        while (true) {
+          const action = yield take(actions)
+          yield put({
+            type: isPushAction(action) ? 'handlePush' : 'apply',
+            payload: action,
+          })
         }
       },
       { type: 'watcher' },
