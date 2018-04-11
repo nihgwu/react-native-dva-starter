@@ -1,4 +1,4 @@
-import React from 'react'
+import * as React from 'react'
 import { AppRegistry } from 'react-native'
 
 import dva from './utils/dva'
