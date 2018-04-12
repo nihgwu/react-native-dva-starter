@@ -6,6 +6,7 @@ import {
   TabBarBottom,
   addNavigationHelpers,
   NavigationActions,
+  NavigationStackAction,
 } from 'react-navigation'
 import {
   initializeListeners,
@@ -30,7 +31,7 @@ const HomeNavigator = TabNavigator(
     tabBarPosition: 'bottom',
     swipeEnabled: false,
     animationEnabled: false,
-    lazyLoad: false,
+    // lazyLoad: false,
   }
 )
 
@@ -100,7 +101,7 @@ export const routerMiddleware = createReactNavigationReduxMiddleware(
 const addListener = createReduxBoundAddListener('root')
 
 @connect(({ app, router }) => ({ app, router }))
-class Router extends PureComponent {
+class Router extends PureComponent<any> {
   componentWillMount() {
     BackHandler.addEventListener('hardwareBackPress', this.backHandle)
   }
@@ -138,7 +139,7 @@ class Router extends PureComponent {
   }
 }
 
-export function routerReducer(state, action = {}) {
+export function routerReducer(state, action = {} as NavigationStackAction) {
   return AppNavigator.router.getStateForAction(action, state)
 }
 

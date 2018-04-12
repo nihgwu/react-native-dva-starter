@@ -7,18 +7,21 @@
     "test": "jest",
     "prettier": "prettier --write --single-quote --no-semi --trailing-comma es5 --print-width 80 \"app/**/*.js\"",
     "lint": "eslint app",
-    "format": "yarn prettier && yarn lint --fix",
-    "precommit": "yarn format"
+    "format": "yarn prettier && yarn lint --fix"
   },
   "dependencies": {
-    "dva-core": "^1.1.0",
-    "react": "^16.3.0-alpha.0",
-    "react-native": "^0.54.2",
-    "react-navigation": "^1.5.8",
-    "react-navigation-redux-helpers": "^1.0.3",
+    "dva": "^2.2.2",
+    "react": "^16.3.1",
+    "react-native": "^0.55.2",
+    "react-navigation": "^1.5.11",
+    "react-navigation-redux-helpers": "^1.0.5",
     "react-redux": "^5.0.7"
   },
   "devDependencies": {
+    "@types/react": "^16.3.8",
+    "@types/react-native": "^0.55.1",
+    "@types/react-navigation": "^1.5.5",
+    "@types/react-redux": "^5.0.16",
     "babel-eslint": "^8.2.2",
     "babel-jest": "^22.4.3",
     "babel-plugin-transform-decorators-legacy": "^1.3.4",
@@ -34,7 +37,9 @@
     "husky": "^0.14.3",
     "jest": "^22.4.3",
     "prettier": "^1.11.1",
-    "react-test-renderer": "^16.3.0-alpha.0"
+    "react-native-typescript-transformer": "^1.2.4",
+    "react-test-renderer": "^16.3.0-alpha.0",
+    "typescript": "^2.8.1"
   },
   "jest": {
     "preset": "react-native"
