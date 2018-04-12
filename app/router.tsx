@@ -1,4 +1,4 @@
-import * as React from 'react'
+import React, { PureComponent } from 'react'
 import { BackHandler, Animated, Easing } from 'react-native'
 import {
   StackNavigator,
@@ -6,6 +6,7 @@ import {
   TabBarBottom,
   addNavigationHelpers,
   NavigationActions,
+  NavigationStackAction,
 } from 'react-navigation'
 import {
   initializeListeners,
@@ -99,8 +100,8 @@ export const routerMiddleware = createReactNavigationReduxMiddleware(
 )
 const addListener = createReduxBoundAddListener('root')
 
-// @connect(({ app, router }) => ({ app, router }))
-class Router extends React.PureComponent {
+@connect(({ app, router }) => ({ app, router }))
+class Router extends PureComponent<any> {
   componentWillMount() {
     BackHandler.addEventListener('hardwareBackPress', this.backHandle)
   }
@@ -138,7 +139,7 @@ class Router extends React.PureComponent {
   }
 }
 
-export function routerReducer(state, action = {}) {
+export function routerReducer(state, action = {} as NavigationStackAction) {
   return AppNavigator.router.getStateForAction(action, state)
 }
 

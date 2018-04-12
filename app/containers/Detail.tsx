@@ -7,7 +7,7 @@ import { Button } from '../components'
 import { NavigationActions } from '../utils'
 
 @connect()
-class Detail extends Component {
+class Detail extends Component<any> {
   static navigationOptions = {
     title: 'Detail',
   }

@@ -7,7 +7,7 @@ import { Button } from '../components'
 import { createAction, NavigationActions } from '../utils'
 
 @connect(({ app }) => ({ ...app }))
-class Account extends Component {
+class Account extends Component<any, any> {
   static navigationOptions = {
     title: 'Account',
     tabBarLabel: 'Account',
