@@ -23,6 +23,8 @@ export default {
       const login = yield call(authService.login, payload)
       if (login) {
         yield put(
+          // NavigationActions.reset can't use at react-navigation 2.0.1
+          // should use StackActions, but now is ineffective
           NavigationActions.reset({
             index: 0,
             actions: [NavigationActions.navigate({ routeName: 'Main' })],

@@ -4,7 +4,6 @@ import {
   StackNavigator,
   TabNavigator,
   TabBarBottom,
-  addNavigationHelpers,
   NavigationActions,
 } from 'react-navigation'
 import {
@@ -129,11 +128,11 @@ class Router extends PureComponent {
     const { dispatch, app, router } = this.props
     if (app.loading) return <Loading />
 
-    const navigation = addNavigationHelpers({
+    const navigation = {
       dispatch,
       state: router,
       addListener,
-    })
+    }
     return <AppNavigator navigation={navigation} />
   }
 }
