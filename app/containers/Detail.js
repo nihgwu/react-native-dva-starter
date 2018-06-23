@@ -12,10 +12,6 @@ class Detail extends Component {
     title: 'Detail',
   }
 
-  gotoDetail = () => {
-    this.props.dispatch(NavigationActions.navigate({ routeName: 'Detail' }))
-  }
-
   goBack = () => {
     this.props.dispatch(NavigationActions.back({ routeName: 'Account' }))
   }
@@ -23,7 +19,6 @@ class Detail extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <Button text="Goto Detail" onPress={this.gotoDetail} />
         <Button text="Go Back" onPress={this.goBack} />
       </View>
     )

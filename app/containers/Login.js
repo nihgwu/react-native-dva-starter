@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { StyleSheet, View, Text, ActivityIndicator } from 'react-native'
+import { StyleSheet, View, Image, ActivityIndicator } from 'react-native'
 import { connect } from 'react-redux'
 
 import { Button, Touchable } from '../components'
@@ -30,8 +30,11 @@ class Login extends Component {
           <Button text="Login" onPress={this.onLogin} />
         )}
         {!fetching && (
-          <Touchable style={styles.close} text="Close" onPress={this.onClose}>
-            <Text>Close</Text>
+          <Touchable style={styles.close} onPress={this.onClose}>
+            <Image
+              style={styles.icon}
+              source={require('../images/close.png')}
+            />
           </Touchable>
         )}
       </View>
@@ -47,8 +50,13 @@ const styles = StyleSheet.create({
   },
   close: {
     position: 'absolute',
-    right: 20,
-    top: 40,
+    right: 10,
+    top: 30,
+  },
+  icon: {
+    width: 24,
+    height: 24,
+    tintColor: 'gray',
   },
 })
 

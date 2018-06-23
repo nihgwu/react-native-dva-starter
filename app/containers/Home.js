@@ -9,7 +9,6 @@ import { NavigationActions } from '../utils'
 @connect()
 class Home extends Component {
   static navigationOptions = {
-    title: 'Home',
     tabBarLabel: 'Home',
     tabBarIcon: ({ focused, tintColor }) => (
       <Image

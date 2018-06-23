@@ -9,7 +9,6 @@ import { createAction, NavigationActions } from '../utils'
 @connect(({ app }) => ({ ...app }))
 class Account extends Component {
   static navigationOptions = {
-    title: 'Account',
     tabBarLabel: 'Account',
     tabBarIcon: ({ focused, tintColor }) => (
       <Image
