@@ -6,13 +6,12 @@ A React Native starter powered by [dva](https://github.com/dvajs/dva) and [react
 
 ```bash
 npm install dva-native-cli -g
-dvanative new app
+dvanative git app
 cd app
 react-native run-ios # or react-native run-android
 ```
 
-#### [dva-native-cli](https://github.com/xuan45/dva-native-cli)
-We provide a cli for react-native-dva-starter, for more usages and infomation click [dva-native-cli](https://github.com/xuan45/dva-native-cli)
+Great thanks to @xuan45 for his cli tool [dva-native-cli](https://github.com/xuan45/dva-native-cli), check that project for more information.
 
 ## Advance
 
