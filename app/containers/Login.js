@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
-import { StyleSheet, View, Button, ActivityIndicator } from 'react-native'
+import { StyleSheet, View, Image, ActivityIndicator } from 'react-native'
 import { connect } from 'react-redux'
+
+import { Button, Touchable } from '../components'
 
 import { createAction, NavigationActions } from '../utils'
 
@@ -22,10 +24,19 @@ class Login extends Component {
     const { fetching } = this.props
     return (
       <View style={styles.container}>
-        {fetching
-          ? <ActivityIndicator />
-          : <Button title="Login" onPress={this.onLogin} />}
-        {!fetching && <Button title="Close" onPress={this.onClose} />}
+        {fetching ? (
+          <ActivityIndicator />
+        ) : (
+          <Button text="Login" onPress={this.onLogin} />
+        )}
+        {!fetching && (
+          <Touchable style={styles.close} onPress={this.onClose}>
+            <Image
+              style={styles.icon}
+              source={require('../images/close.png')}
+            />
+          </Touchable>
+        )}
       </View>
     )
   }
@@ -36,6 +47,16 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
+  },
+  close: {
+    position: 'absolute',
+    right: 10,
+    top: 30,
+  },
+  icon: {
+    width: 24,
+    height: 24,
+    tintColor: 'gray',
   },
 })
 

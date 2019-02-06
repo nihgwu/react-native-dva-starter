@@ -1,34 +1,37 @@
 import React, { PureComponent } from 'react'
 import { BackHandler, Animated, Easing } from 'react-native'
 import {
-  StackNavigator,
-  TabNavigator,
-  TabBarBottom,
-  addNavigationHelpers,
+  createStackNavigator,
+  createBottomTabNavigator,
   NavigationActions,
 } from 'react-navigation'
+import {
+  reduxifyNavigator,
+  createReactNavigationReduxMiddleware,
+  createNavigationReducer,
+} from 'react-navigation-redux-helpers'
 import { connect } from 'react-redux'
 
+import Loading from './containers/Loading'
 import Login from './containers/Login'
 import Home from './containers/Home'
 import Account from './containers/Account'
 import Detail from './containers/Detail'
 
-const HomeNavigator = TabNavigator(
-  {
-    Home: { screen: Home },
-    Account: { screen: Account },
-  },
-  {
-    tabBarComponent: TabBarBottom,
-    tabBarPosition: 'bottom',
-    swipeEnabled: false,
-    animationEnabled: false,
-    lazyLoad: true,
-  }
-)
+const HomeNavigator = createBottomTabNavigator({
+  Home: { screen: Home },
+  Account: { screen: Account },
+})
 
-const MainNavigator = StackNavigator(
+HomeNavigator.navigationOptions = ({ navigation }) => {
+  const { routeName } = navigation.state.routes[navigation.state.index]
+
+  return {
+    headerTitle: routeName,
+  }
+}
+
+const MainNavigator = createStackNavigator(
   {
     HomeNavigator: { screen: HomeNavigator },
     Detail: { screen: Detail },
@@ -38,7 +41,7 @@ const MainNavigator = StackNavigator(
   }
 )
 
-const AppNavigator = StackNavigator(
+const AppNavigator = createStackNavigator(
   {
     Main: { screen: MainNavigator },
     Login: { screen: Login },
@@ -76,18 +79,27 @@ const AppNavigator = StackNavigator(
   }
 )
 
-function getCurrentScreen(navigationState) {
+export const routerReducer = createNavigationReducer(AppNavigator)
+
+export const routerMiddleware = createReactNavigationReduxMiddleware(
+  'root',
+  state => state.router
+)
+
+const App = reduxifyNavigator(AppNavigator, 'root')
+
+function getActiveRouteName(navigationState) {
   if (!navigationState) {
     return null
   }
   const route = navigationState.routes[navigationState.index]
   if (route.routes) {
-    return getCurrentScreen(route)
+    return getActiveRouteName(route)
   }
   return route.routeName
 }
 
-@connect(({ router }) => ({ router }))
+@connect(({ app, router }) => ({ app, router }))
 class Router extends PureComponent {
   componentWillMount() {
     BackHandler.addEventListener('hardwareBackPress', this.backHandle)
@@ -98,7 +110,7 @@ class Router extends PureComponent {
   }
 
   backHandle = () => {
-    const currentScreen = getCurrentScreen(this.props.router)
+    const currentScreen = getActiveRouteName(this.props.router)
     if (currentScreen === 'Login') {
       return true
     }
@@ -110,14 +122,11 @@ class Router extends PureComponent {
   }
 
   render() {
-    const { dispatch, router } = this.props
-    const navigation = addNavigationHelpers({ dispatch, state: router })
-    return <AppNavigator navigation={navigation} />
-  }
-}
+    const { app, dispatch, router } = this.props
+    if (app.loading) return <Loading />
 
-export function routerReducer(state, action = {}) {
-  return AppNavigator.router.getStateForAction(action, state)
+    return <App dispatch={dispatch} state={router} />
+  }
 }
 
 export default Router

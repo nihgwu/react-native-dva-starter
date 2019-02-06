@@ -1,19 +1,21 @@
 import React, { Component } from 'react'
-import { StyleSheet, View, Image, Button } from 'react-native'
+import { StyleSheet, View, Image } from 'react-native'
 import { connect } from 'react-redux'
+
+import { Button } from '../components'
 
 import { NavigationActions } from '../utils'
 
 @connect()
 class Home extends Component {
   static navigationOptions = {
-    title: 'Home',
     tabBarLabel: 'Home',
-    tabBarIcon: ({ focused, tintColor }) =>
+    tabBarIcon: ({ focused, tintColor }) => (
       <Image
         style={[styles.icon, { tintColor: focused ? tintColor : 'gray' }]}
         source={require('../images/house.png')}
-      />,
+      />
+    ),
   }
 
   gotoDetail = () => {
@@ -23,7 +25,7 @@ class Home extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <Button title="Goto Detail" onPress={this.gotoDetail} />
+        <Button text="Goto Detail" onPress={this.gotoDetail} />
       </View>
     )
   }
